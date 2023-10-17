@@ -73,7 +73,7 @@ const fetchChats = asyncHandler(async (req, res) => {
 
 const createGroupChat = asyncHandler(async (req, res) => {
   if (!req.body.users || !req.body.name) {
-    return res.status(400).send({ message: "Please Fill all the feilds" });
+    return res.status(400).send({ message: "Please Fill all the fields" });
   }
 
   var users = JSON.parse(req.body.users);
@@ -132,8 +132,6 @@ const renameGroup = asyncHandler(async (req, res) => {
 const removeFromGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
-  // check if the requester is admin
-
   const removed = await Chat.findByIdAndUpdate(
     chatId,
     {
@@ -154,13 +152,9 @@ const removeFromGroup = asyncHandler(async (req, res) => {
   }
 });
 
-// // @desc    Add user to Group / Leave
-// // @route   PUT /api/chat/groupadd
-// // @access  Protected
+
 const addToGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
-
-  // check if the requester is admin
 
   const added = await Chat.findByIdAndUpdate(
     chatId,

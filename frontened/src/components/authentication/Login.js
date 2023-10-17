@@ -10,12 +10,15 @@ import {
   useToast
 } from "@chakra-ui/react";
 import axios from "axios";
+import {ChatState} from "../../Context/ChatProvider"
 import { useHistory } from "react-router-dom";
+import { set } from 'mongoose';
 
 
 const Login = () => {
  
     const history=useHistory();
+     const { setUser } = ChatState();
      const [email, setEmail] = useState();
      const [password, setPassword] = useState();
        const [show, setShow] = useState(false);
@@ -60,7 +63,7 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-   
+      setUser(data);
        localStorage.setItem("userInfo", JSON.stringify(data));
        setLoading(false);
        history.push("/chats");
@@ -93,6 +96,7 @@ const Login = () => {
         <FormLabel>Email</FormLabel>
         <Input
          value={email}
+         type="email"
           placeholder="Enter your Email"
           onChange={(e) => setEmail(e.target.value)}
         />

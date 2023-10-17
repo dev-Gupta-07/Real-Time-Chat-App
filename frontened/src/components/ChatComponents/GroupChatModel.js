@@ -100,7 +100,6 @@ const GroupChatModel = ({children}) => {
 
           toast({
             title: "New group chat created!",
-
             status: "success",
             duration: 5000,
             isClosable: true,

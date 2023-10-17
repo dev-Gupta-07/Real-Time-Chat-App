@@ -69,7 +69,7 @@ const UpdateGroupChatModel = ({fetchMessages,fetchAgain,setFetchAgain}) => {
        });
        setLoading(false);
      }
-    
+    setGroupChatName("");
    };
     const handleRemove = async (user1) => {
       if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
@@ -119,7 +119,7 @@ const UpdateGroupChatModel = ({fetchMessages,fetchAgain,setFetchAgain}) => {
     };
    const handleRename = async () => {
     
-     console.log("abc");
+     if (!groupChatName) return;
 
      try {
        setRenameLoading(true);
@@ -128,7 +128,7 @@ const UpdateGroupChatModel = ({fetchMessages,fetchAgain,setFetchAgain}) => {
            Authorization: `Bearer ${user.token}`,
          },
        };
-       console.log("xyz");
+      
        const { data } = await axios.put(
          `/api/chat/rename`,
          {
@@ -139,7 +139,6 @@ const UpdateGroupChatModel = ({fetchMessages,fetchAgain,setFetchAgain}) => {
        );
 
        console.log(data._id);
-       // setSelectedChat("");
        setSelectedChat(data);
        setFetchAgain(!fetchAgain);
        setRenameLoading(false);
@@ -183,6 +182,7 @@ const handleSearch = async (query) => {
       isClosable: true,
       position: "bottom-left",
     });
+     setLoading(false);
   }
 };
   
@@ -212,6 +212,7 @@ const handleSearch = async (query) => {
                 <UserBadgeItem
                   key={u._id}
                   user={u}
+                  admin={selectedChat.groupAdmin}
                   handleFunction={() => handleRemove(u)}
                 ></UserBadgeItem>
               ))}
